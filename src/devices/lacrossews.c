@@ -113,9 +113,9 @@ static int lacrossews_callback(r_device *decoder, bitbuffer_t *bitbuffer)
 
         case 0: // Temperature
             if (ws_id == 0x6)
-                temp_c = (msg_value_bcd - 400.0) * 0.1;
+                temp_c = (msg_value_bcd - 400.0) * 0.1f;
             else
-                temp_c = (msg_value_bcd - 300.0) * 0.1;
+                temp_c = (msg_value_bcd - 300.0) * 0.1f;
 
             /* clang-format off */
             data = data_make(
@@ -168,7 +168,7 @@ static int lacrossews_callback(r_device *decoder, bitbuffer_t *bitbuffer)
 
         case 7: // Gust
             wind_dir = msg_nybbles[9] * 22.5;
-            wind_spd = (msg_nybbles[7] * 16 + msg_nybbles[8]) / 10.0;
+            wind_spd = (msg_nybbles[7] * 16 + msg_nybbles[8]) * 0.1f;
             if (msg_nybbles[7] == 0xF && msg_nybbles[8] == 0xE) {
                 if (decoder->verbose) {
                     fprintf(stderr, "LaCrosse WS %02X-%02X: %s Not Connected\n",
